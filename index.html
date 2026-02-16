@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lance Shields — Director of Design</title>
+  <style>
+    :root {
+      --white: hsl(0, 7%, 95%);
+      --black: hsl(212, 24%, 11%);
+      --accent: hsl(312, 34%, 93%);
+      --light-accent: hsl(33, 53%, 89%);
+      --dark-accent: hsl(0, 0%, 55%);
+      --border: hsl(0, 0%, 85%);
+      --hover-bg: hsl(0, 0%, 97%);
+      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      --max-width: 800px;
+      --gutter: 4vw;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+      padding: var(--gutter);
+    }
+
+    .resume {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+
+    /* ── Header ── */
+    .header {
+      margin-bottom: 2.5rem;
+    }
+
+    .header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.25rem;
+    }
+
+    .header .subtitle {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--dark-accent);
+      margin-bottom: 1rem;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 1.25rem;
+      font-size: 0.875rem;
+      color: var(--dark-accent);
+    }
+
+    .contact-row a {
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .contact-row a:hover {
+      border-color: var(--black);
+    }
+
+    .portfolio-row {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--dark-accent);
+    }
+
+    .portfolio-row a {
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .portfolio-row a:hover {
+      border-color: var(--black);
+    }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Summary ── */
+    .summary {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--black);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Accordion ── */
+    .accordion {
+      border-top: 1px solid var(--border);
+    }
+
+    .accordion:last-child {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-stack);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      transition: color 0.2s;
+    }
+
+    .accordion-trigger:hover {
+      color: var(--dark-accent);
+    }
+
+    .accordion-trigger:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .accordion-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      position: relative;
+      margin-left: 1rem;
+    }
+
+    .accordion-icon::before,
+    .accordion-icon::after {
+      content: "";
+      position: absolute;
+      background-color: var(--black);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .accordion-icon::before {
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      transform: translateY(-50%);
+    }
+
+    .accordion-icon::after {
+      top: 0;
+      left: 50%;
+      width: 1.5px;
+      height: 100%;
+      transform: translateX(-50%);
+    }
+
+    .accordion-trigger[aria-expanded="true"] .accordion-icon::after {
+      transform: translateX(-50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .accordion-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s ease;
+    }
+
+    .accordion-panel[aria-hidden="false"] {
+      grid-template-rows: 1fr;
+    }
+
+    .accordion-panel-inner {
+      overflow: hidden;
+    }
+
+    .accordion-content {
+      padding-bottom: 1.5rem;
+    }
+
+    /* ── Job Entry ── */
+    .job {
+      margin-bottom: 2rem;
+    }
+
+    .job:last-child {
+      margin-bottom: 0;
+    }
+
+    .job-header {
+      margin-bottom: 0.75rem;
+    }
+
+    .job-company {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .job-title {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--dark-accent);
+    }
+
+    .job-date {
+      font-size: 0.8rem;
+      color: var(--dark-accent);
+      margin-top: 0.15rem;
+    }
+
+    .job ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .job ul li {
+      position: relative;
+      padding-left: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 0.6rem;
+    }
+
+    .job ul li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--dark-accent);
+    }
+
+    /* ── Sub-accordion (nested roles) ── */
+    .sub-accordion {
+      border-top: 1px solid var(--border);
+      margin-top: 1.5rem;
+    }
+
+    .sub-accordion:first-child {
+      border-top: none;
+      margin-top: 0;
+    }
+
+    .sub-accordion-trigger {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 1rem 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-stack);
+      text-align: left;
+      color: var(--black);
+      transition: color 0.2s;
+    }
+
+    .sub-accordion-trigger:hover {
+      color: var(--dark-accent);
+    }
+
+    .sub-accordion-trigger:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .sub-accordion-trigger .job-header {
+      margin-bottom: 0;
+    }
+
+    .sub-accordion-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      margin-left: 1rem;
+      margin-top: 0.3rem;
+      position: relative;
+    }
+
+    .sub-accordion-icon::before,
+    .sub-accordion-icon::after {
+      content: "";
+      position: absolute;
+      background-color: var(--dark-accent);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .sub-accordion-icon::before {
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      transform: translateY(-50%);
+    }
+
+    .sub-accordion-icon::after {
+      top: 0;
+      left: 50%;
+      width: 1.5px;
+      height: 100%;
+      transform: translateX(-50%);
+    }
+
+    .sub-accordion-trigger[aria-expanded="true"] .sub-accordion-icon::after {
+      transform: translateX(-50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .sub-accordion-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s ease;
+    }
+
+    .sub-accordion-panel[aria-hidden="false"] {
+      grid-template-rows: 1fr;
+    }
+
+    .sub-accordion-panel-inner {
+      overflow: hidden;
+    }
+
+    .sub-accordion-content {
+      padding-bottom: 1rem;
+    }
+
+    /* ── Skills Grid ── */
+    .skills-category {
+      margin-bottom: 1.5rem;
+    }
+
+    .skills-category:last-child {
+      margin-bottom: 0;
+    }
+
+    .skills-category h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.8rem;
+      background-color: var(--accent);
+      border-radius: 3px;
+      color: var(--black);
+      line-height: 1.4;
+    }
+
+    /* ── Education ── */
+    .edu-item {
+      margin-bottom: 0.75rem;
+    }
+
+    .edu-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .edu-item strong {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .edu-item p {
+      font-size: 0.9rem;
+      color: var(--dark-accent);
+    }
+
+    /* ── Awards ── */
+    .awards-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .awards-list li {
+      position: relative;
+      padding-left: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 0.4rem;
+    }
+
+    .awards-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--dark-accent);
+    }
+
+    /* ── Earlier Experience ── */
+    .earlier-roles {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--dark-accent);
+    }
+
+    /* ── Clients ── */
+    .clients-list {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      :root {
+        --gutter: 6vw;
+      }
+
+      .header h1 {
+        font-size: 1.8rem;
+      }
+
+      .header .subtitle {
+        font-size: 1rem;
+      }
+
+      .contact-row {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+    }
+
+    /* ── Print ── */
+    @media print {
+      body {
+        background: white;
+        color: black;
+        padding: 0;
+      }
+
+      .accordion-panel {
+        grid-template-rows: 1fr !important;
+      }
+
+      .sub-accordion-panel {
+        grid-template-rows: 1fr !important;
+      }
+
+      .accordion-icon,
+      .sub-accordion-icon {
+        display: none;
+      }
+
+      .accordion-trigger {
+        cursor: default;
+      }
+
+      .sub-accordion-trigger {
+        cursor: default;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="resume">
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <h1>Lance Shields</h1>
+    <p class="subtitle">Director of Design</p>
+    <div class="contact-row">
+      <span>San Francisco, CA</span>
+      <span>415-361-9584</span>
+      <a href="mailto:lance@lanceshields.design">lance@lanceshields.design</a>
+      <a href="https://linkedin.com/in/lanceshields" target="_blank" rel="noopener">linkedin.com/in/lanceshields</a>
+    </div>
+    <div class="portfolio-row">
+      <span>Portfolio: <a href="https://bit.ly/shields-design" target="_blank" rel="noopener">bit.ly/shields-design</a> · password: lead-with-design</span>
+    </div>
+    <div class="portfolio-row">
+      <span>Website: <a href="https://www.lanceshields.design" target="_blank" rel="noopener">lanceshields.design</a></span>
+    </div>
+  </header>
+
+  <hr class="divider">
+
+  <!-- ── Summary ── -->
+  <p class="summary">
+    Design leader with 20+ years of experience driving AI-first product innovation at enterprise scale. Most recently led Walmart's AI-powered eCommerce design for 580M+ monthly visitors, embedding proprietary AI models into search, discovery, and multimodal shopping experiences. Previously at Adobe, directed the evolution of Adobe Express into an AI-powered creative ecosystem—leading design for Project Harmony and AI-first creation tools that drove 120% adoption growth, while building extensibility platforms and cross-Adobe integrations (Express × Acrobat) that added 1.5M users in a single quarter. Combines an MBA from McGill with an MIT certification in AI Product Design to bridge business strategy, generative AI, and human-centered design craft. Known for defining vision, aligning executive stakeholders, and scaling high-impact design organizations across enterprise and consumer platforms.
+  </p>
+
+  <hr class="divider">
+
+  <!-- ── Work Experience ── -->
+  <div class="accordion">
+    <button class="accordion-trigger" aria-expanded="false" aria-controls="panel-experience">
+      <span>Work Experience</span>
+      <span class="accordion-icon" aria-hidden="true"></span>
+    </button>
+    <div class="accordion-panel" id="panel-experience" aria-hidden="true">
+      <div class="accordion-panel-inner">
+        <div class="accordion-content">
+
+          <!-- Walmart -->
+          <div class="sub-accordion">
+            <button class="sub-accordion-trigger" aria-expanded="false" aria-controls="panel-walmart">
+              <div class="job-header">
+                <div class="job-company">Walmart</div>
+                <div class="job-title">Director of Design, eCommerce Experiences</div>
+                <div class="job-date">June 2025 – November 2025</div>
+              </div>
+              <span class="sub-accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="sub-accordion-panel" id="panel-walmart" aria-hidden="true">
+              <div class="sub-accordion-panel-inner">
+                <div class="sub-accordion-content">
+                  <div class="job">
+                    <p style="font-size:0.9rem;line-height:1.7;margin-bottom:0.75rem;">Led AI-powered eCommerce design for Walmart, shaping shopping experiences for 580M+ monthly visitors. Drove innovation and craft at scale through AI-driven, human-centered, and ethical design.</p>
+                    <ul>
+                      <li>Oversaw product design for Walmart's core commerce ecosystem—search, product detail pages, and customer reviews—defining end-to-end workflows across enterprise-scale platforms.</li>
+                      <li>Led the design transformation of search and PDP by embedding Walmart's proprietary AI models into every stage of the discovery flow, bridging behavior, context, and intent to redefine how customers find and engage with products.</li>
+                      <li>Pioneered the Walmart Live Camera, integrating AI, computer vision, and AR simulation to let customers use their camera, voice, or room scans to discover and visualize products—turning real-world context into personalized, multimodal commerce.</li>
+                      <li>Championed customer-driven design strategies grounded in research and real-world usage, translating enterprise feedback into actionable design direction with short- and long-term impact.</li>
+                      <li>Designed multimodal and generative AI interactions emphasizing interaction patterns and human judgment in AI-powered shopping journeys.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Adobe Express -->
+          <div class="sub-accordion">
+            <button class="sub-accordion-trigger" aria-expanded="false" aria-controls="panel-adobe-express">
+              <div class="job-header">
+                <div class="job-company">Adobe</div>
+                <div class="job-title">Product Design Director, Adobe Express</div>
+                <div class="job-date">October 2018 – February 2025</div>
+              </div>
+              <span class="sub-accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="sub-accordion-panel" id="panel-adobe-express" aria-hidden="true">
+              <div class="sub-accordion-panel-inner">
+                <div class="sub-accordion-content">
+                  <div class="job">
+                    <p style="font-size:0.9rem;line-height:1.7;margin-bottom:0.75rem;">Led cross-functional design teams building an AI-powered creative ecosystem for marketers and communicators. Designed extensible partner integrations, embeddable SDKs, and AI-first creation tools that helped enterprise customers create content efficiently and at scale.</p>
+                    <ul>
+                      <li>Led design for Project Harmony and other AI-first creation tools, resulting in 120% increase in user adoption within 6 months—demonstrating a player/coach approach of prototyping, experimenting, and elevating team craft.</li>
+                      <li>Directed two cross-functional design teams, defining vision and strategy for Adobe Express's extensibility ecosystem—shaping how users create and integrate AI-powered solutions across enterprise and consumer platforms.</li>
+                      <li>Spearheaded integration of Express into Acrobat, delivering 3M new users and contributing to 8% MAU uplift—partnering across Adobe product and engineering teams to ensure feasibility, scalability, and performance.</li>
+                      <li>Designed the Express add-on platform and partner integrations, achieving 415% growth in MAU and driving tenfold increase in third-party plugins within a year—building composable workflows across first- and third-party ecosystems.</li>
+                      <li>Championed a tinkerer's mindset of rapid experimentation with emerging UI patterns and generative AI capabilities across the Express platform.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Adobe International -->
+          <div class="sub-accordion">
+            <button class="sub-accordion-trigger" aria-expanded="false" aria-controls="panel-adobe-intl">
+              <div class="job-header">
+                <div class="job-company">Adobe</div>
+                <div class="job-title">Design Director, International Design</div>
+                <div class="job-date"></div>
+              </div>
+              <span class="sub-accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="sub-accordion-panel" id="panel-adobe-intl" aria-hidden="true">
+              <div class="sub-accordion-panel-inner">
+                <div class="sub-accordion-content">
+                  <div class="job">
+                    <ul>
+                      <li>Founded and led Adobe's first International Design team, supporting product expansion in Asian markets—delivering culturally relevant mini apps and plugins used by millions across Japan, Korea, Taiwan, and China.</li>
+                      <li>Forged strategic integration strategies with Tencent and Alibaba to expand Adobe's platform presence, influencing senior stakeholders with compelling narratives and market insights.</li>
+                      <li>Built a global design practice focused on social and messaging-first creative experiences, scaling team structure to meet evolving market needs.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ideas in Digital -->
+          <div class="sub-accordion">
+            <button class="sub-accordion-trigger" aria-expanded="false" aria-controls="panel-iid">
+              <div class="job-header">
+                <div class="job-company">Ideas in Digital</div>
+                <div class="job-title">Head of Design and Co-Founder</div>
+                <div class="job-date">2011 – 2018</div>
+              </div>
+              <span class="sub-accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="sub-accordion-panel" id="panel-iid" aria-hidden="true">
+              <div class="sub-accordion-panel-inner">
+                <div class="sub-accordion-content">
+                  <div class="job">
+                    <ul>
+                      <li>Founded and scaled an award-winning digital design agency; led enterprise product design for fintech, e-commerce, and consumer apps including Visa, Chase, and Red Bull.</li>
+                      <li>Led end-to-end creative across web, mobile, social, and experiential platforms—recognized with multiple Webby Awards and international design honors.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Earlier Experience ── -->
+  <div class="accordion">
+    <button class="accordion-trigger" aria-expanded="false" aria-controls="panel-earlier">
+      <span>Earlier Experience</span>
+      <span class="accordion-icon" aria-hidden="true"></span>
+    </button>
+    <div class="accordion-panel" id="panel-earlier" aria-hidden="true">
+      <div class="accordion-panel-inner">
+        <div class="accordion-content">
+          <p class="earlier-roles">
+            Digital Marketing Group Director, MRM/McCann, Tokyo &middot; Creative Director, Amway, Tokyo &middot; Creative Director, Scient, Tokyo
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Skills & Expertise ── -->
+  <div class="accordion">
+    <button class="accordion-trigger" aria-expanded="false" aria-controls="panel-skills">
+      <span>Skills &amp; Expertise</span>
+      <span class="accordion-icon" aria-hidden="true"></span>
+    </button>
+    <div class="accordion-panel" id="panel-skills" aria-hidden="true">
+      <div class="accordion-panel-inner">
+        <div class="accordion-content">
+
+          <div class="skills-category">
+            <h4>AI &amp; Innovation</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">AI-Powered Product Experiences</span>
+              <span class="skill-tag">Generative AI Workflows</span>
+              <span class="skill-tag">Multimodal UX (Text / Voice / Vision)</span>
+              <span class="skill-tag">Human-Centered AI Design</span>
+              <span class="skill-tag">Rapid Prototyping &amp; Experimentation</span>
+              <span class="skill-tag">0-to-1 Innovation</span>
+            </div>
+          </div>
+
+          <div class="skills-category">
+            <h4>Design Leadership</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Vision &amp; Strategy Definition</span>
+              <span class="skill-tag">Team Building &amp; Mentorship (Player / Coach)</span>
+              <span class="skill-tag">Design Systems &amp; Patterns</span>
+              <span class="skill-tag">End-to-End Workflow Design</span>
+              <span class="skill-tag">Systems Thinking</span>
+              <span class="skill-tag">Design-Led Strategy Under Ambiguity</span>
+            </div>
+          </div>
+
+          <div class="skills-category">
+            <h4>Enterprise &amp; Platform</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Enterprise &amp; Consumer UX</span>
+              <span class="skill-tag">Cross-functional Leadership</span>
+              <span class="skill-tag">Executive Stakeholder Alignment</span>
+              <span class="skill-tag">Customer-Driven Change Management</span>
+              <span class="skill-tag">Platform Extensibility</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Select Clients ── -->
+  <div class="accordion">
+    <button class="accordion-trigger" aria-expanded="false" aria-controls="panel-clients">
+      <span>Select Clients</span>
+      <span class="accordion-icon" aria-hidden="true"></span>
+    </button>
+    <div class="accordion-panel" id="panel-clients" aria-hidden="true">
+      <div class="accordion-panel-inner">
+        <div class="accordion-content">
+          <p class="clients-list">Walmart &middot; Adobe &middot; Visa &middot; Chase &middot; Red Bull &middot; Fitbit &middot; Hitachi &middot; Yokogawa &middot; Chanel &middot; ADP &middot; Kraft &middot; McCann</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Education & Certifications ── -->
+  <div class="accordion">
+    <button class="accordion-trigger" aria-expanded="false" aria-controls="panel-education">
+      <span>Education &amp; Certifications</span>
+      <span class="accordion-icon" aria-hidden="true"></span>
+    </button>
+    <div class="accordion-panel" id="panel-education" aria-hidden="true">
+      <div class="accordion-panel-inner">
+        <div class="accordion-content">
+          <div class="edu-item">
+            <strong>MIT xPRO Certificate in Designing and Building AI Products and Services</strong>
+            <p>Practical AI product design with user-centered principles (2025)</p>
+          </div>
+          <div class="edu-item">
+            <strong>MBA in Management &amp; Strategy</strong>
+            <p>McGill University</p>
+          </div>
+          <div class="edu-item">
+            <strong>Bachelor of Fine Arts</strong>
+            <p>San Francisco Art Institute</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Select Awards ── -->
+  <div class="accordion">
+    <button class="accordion-trigger" aria-expanded="false" aria-controls="panel-awards">
+      <span>Select Awards</span>
+      <span class="accordion-icon" aria-hidden="true"></span>
+    </button>
+    <div class="accordion-panel" id="panel-awards" aria-hidden="true">
+      <div class="accordion-panel-inner">
+        <div class="accordion-content">
+          <ul class="awards-list">
+            <li>Webby Award — AI-first All-in-One Creation App, Adobe Express (2024)</li>
+            <li>Webby Award — Best Nonprofit Website (2016)</li>
+            <li>W3 Awards, Gold — Mobile Apps (2017)</li>
+            <li>Japan Marketing Award, Silver (2015)</li>
+            <li>Good Design Award, Japan — Hitachi.com (2012)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Accordion Logic ──
+  function initAccordions(triggerSelector, panelSuffix) {
+    document.querySelectorAll(triggerSelector).forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const expanded = trigger.getAttribute('aria-expanded') === 'true';
+        const panelId = trigger.getAttribute('aria-controls');
+        const panel = document.getElementById(panelId);
+
+        trigger.setAttribute('aria-expanded', String(!expanded));
+        panel.setAttribute('aria-hidden', String(expanded));
+      });
+    });
+  }
+
+  initAccordions('.accordion-trigger');
+  initAccordions('.sub-accordion-trigger');
+</script>
+
+</body>
+</html>
